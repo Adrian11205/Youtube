@@ -1,6 +1,6 @@
 "use client";
 
-import VideoList from "@/components/video/VideoList";
+import VideoList from "@/components/video/VideoGrid";
 import { useAuthStore } from "@/stores/useAuthStore";
 
 export default function Home() {

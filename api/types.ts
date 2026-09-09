@@ -34,6 +34,7 @@ export type UserChannelProfile = {
   isSubscribed: boolean;
   email?: string;
   createdAt: string;
+  owner: number;
 };
 
 export type RegisterPayload = {
