@@ -5,17 +5,21 @@ import type { VideoInfo } from "@/api/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import UploadVideo from "@/components/video/UploadVideo"
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
-function VideoList({ compact = false }: { compact?: boolean }) {
+function VideoGrid() {
     const [showUploadVideo, setShowUploadVideo] = useState(false);
+    const searchParams = useSearchParams();
+    const search = searchParams.get("search") ?? "";
 
     const queryClient = useQueryClient();
     const { data, isLoading, error } = useQuery({
-        queryKey: ["video"],
+        queryKey: ["video", search],
         queryFn: () => getAllVideo({
             page: 1,
             limit: 10,
-            sort: "-createdAt"
+            sort: "-createdAt",
+            search,
         }),
     });
 
@@ -36,9 +40,9 @@ function VideoList({ compact = false }: { compact?: boolean }) {
                         }} />
                 </div>
             )}
-            <div className={`flex flex-col gap-3 ${compact ? "p-0" : "p-4 sm:p-6"}`}>
+            <div className="ml-16 grid grid-cols-1 gap-6 p-4 sm:grid-cols-2 lg:grid-cols-4">
                 {videos.map((video) => (
-                    <VideoCard key={video._id} videoInfo={video} layout="list" compact={compact} />
+                    <VideoCard key={video._id} videoInfo={video} />
                 ))}
             </div>
         </div>
@@ -46,4 +50,4 @@ function VideoList({ compact = false }: { compact?: boolean }) {
     )
 }
 
-export default VideoList
+export default VideoGrid

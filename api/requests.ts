@@ -88,13 +88,13 @@ export async function history() {
 }
 
 // Video routes
-export async function getAllVideo(
-  pagination: {
-    page?: number;
-    limit?: number;
-    sort?: string;
-  }
-) {
+export async function getAllVideo(pagination: {
+  page?: number;
+  limit?: number;
+  sort?: string;
+  userId?: string;
+  search?: string;
+}) {
   const response = await api.get("/videos", {
     params: pagination,
   });

@@ -1,6 +1,6 @@
 "use client"
 
-import Searchs from '@/components/Search'
+import Searchs from "@/components/core/Search";
 import Register from "@/components/dialogs/Register";
 import Login from "@/components/dialogs/Login"
 import { useState } from "react";
