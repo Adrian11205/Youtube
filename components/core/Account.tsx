@@ -23,12 +23,16 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
-    DropdownMenuLabel
+    DropdownMenuLabel,
+    DropdownMenuSub,
+    DropdownMenuSubTrigger,
+    DropdownMenuPortal,
+    DropdownMenuSubContent
 } from "@/components/ui/dropdown-menu";
 import { useAuthStore } from "@/stores/useAuthStore";
 import Link from "next/link";
 import Image from "next/image";
-
+import SwitchTheme from "@/components/core/SwithchTheme"
 function Account() {
     const { user } = useAuthStore();
 
@@ -102,12 +106,12 @@ function Account() {
 
                 <DropdownMenuItem className="gap-3 border-b  cursor-pointer rounded-none hover:bg-accent hover:text-accent-foreground">
                     <Clapperboard className="text-foreground" />
-                    <span className="text-foreground">Творчества</span>
+                    <span className="text-foreground">Creations</span>
                 </DropdownMenuItem>
 
                 <DropdownMenuItem className="gap-3 border-b  cursor-pointer rounded-none hover:bg-accent hover:text-accent-foreground">
                     <ShoppingBag className="text-foreground" />
-                    <span className="text-foreground">Покупки</span>
+                    <span className="text-foreground">Purchases</span>
                 </DropdownMenuItem>
 
                 <DropdownMenuItem className="gap-3 border-b  cursor-pointer rounded-none hover:bg-accent hover:text-accent-foreground">
@@ -115,10 +119,19 @@ function Account() {
                     <span className="text-foreground">you info youtube</span>
                 </DropdownMenuItem>
 
-                <DropdownMenuItem className="gap-3 border-b  cursor-pointer rounded-none hover:bg-accent hover:text-accent-foreground">
-                    <Palette className="text-foreground" />
-                    <span className="text-foreground">theme</span>
-                </DropdownMenuItem>
+                <DropdownMenuSub>
+                    <DropdownMenuSubTrigger className="gap-3 border-b  cursor-pointer rounded-none hover:bg-accent hover:text-accent-foreground">
+                        <Palette className="text-foreground" />
+                        <span className="text-foreground">theme</span>
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                        <DropdownMenuSubContent>
+                            <SwitchTheme />
+
+                        </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                </DropdownMenuSub>
+
 
                 <DropdownMenuItem className="gap-3 border-b  cursor-pointer rounded-none hover:bg-accent hover:text-accent-foreground">
                     <Languages className="text-foreground" />
@@ -147,12 +160,12 @@ function Account() {
 
                 <DropdownMenuItem className="gap-3 border-b  cursor-pointer rounded-none hover:bg-accent hover:text-accent-foreground">
                     <CircleHelp className="text-foreground" />
-                    <span className="text-foreground">справка</span>
+                    <span className="text-foreground">Help</span>
                 </DropdownMenuItem>
 
                 <DropdownMenuItem className="gap-3 border-b  cursor-pointer rounded-none hover:bg-accent hover:text-accent-foreground">
                     <MessageSquare className="text-foreground" />
-                    <span className="text-foreground">отаравить отзыв</span>
+                    <span className="text-foreground">Send feedback</span>
                 </DropdownMenuItem>
 
             </DropdownMenuContent>

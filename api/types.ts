@@ -59,6 +59,33 @@ export type CommentPayload = {
   content: string;
 };
 
+export type CommentResponse = {
+  _id: string;
+  content: string;
+  video: string;
+  owner: string;
+  ownerDetails?: {
+    fullname: string;
+    username: string;
+    avatar?: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type CommentsPaginationResponse = {
+  docs: CommentResponse[];
+  totalDocs: number;
+  limit: number;
+  totalPages: number;
+  page: number;
+  pagingCounter: number;
+  hasPrevPage: boolean;
+  hasNextPage: boolean;
+  prevPage: number | null;
+  nextPage: number | null;
+};
+
 export type PlaylistPayload = {
   name: string;
   description?: string;

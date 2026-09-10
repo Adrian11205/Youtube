@@ -45,7 +45,7 @@ function VideoCard({ videoInfo, layout = "grid", compact = false }: VideoCardVid
                         sizes={compact ? "224px" : "(max-width: 640px) 176px, 315px"}
                         className="object-cover"
                     />
-                    <span className="absolute bottom-1.5 right-1.5 rounded bg-black/80 px-1.5 py-0.5 text-xs font-semibold text-white">
+                    <span className="absolute bottom-1.5 right-1.5 rounded bg-black-black/80 px-1.5 py-0.5 text-xs font-semibold text-whites">
                         {formatDuration(videoInfo.duration)}
                     </span>
                 </Link>
@@ -64,10 +64,10 @@ function VideoCard({ videoInfo, layout = "grid", compact = false }: VideoCardVid
                                 </button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                                <DropdownMenuItem className="cursor-pointer"><ListPlus /> Добавить в очередь</DropdownMenuItem>
+                                <DropdownMenuItem className="cursor-pointer"><ListPlus /> Add to queue</DropdownMenuItem>
                                 <DropdownMenuItem className="cursor-pointer"><Clock4 /> Watch later</DropdownMenuItem>
-                                <DropdownMenuItem className="cursor-pointer"><Bookmark /> Добавить в плейлист</DropdownMenuItem>
-                                <DropdownMenuItem className="cursor-pointer"><Flag /> Пожаловаться</DropdownMenuItem>
+                                <DropdownMenuItem className="cursor-pointer"><Bookmark /> Add to playlist</DropdownMenuItem>
+                                <DropdownMenuItem className="cursor-pointer"><Flag /> Report</DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>
@@ -95,7 +95,7 @@ function VideoCard({ videoInfo, layout = "grid", compact = false }: VideoCardVid
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     className="object-cover"
                 />
-                <span className="absolute bottom-2 right-2 rounded bg-foreground/80 px-1.5 py-0.5 text-xs font-semibold text-whites">
+                <span className="absolute bottom-2 right-2 rounded bg-black-black/80 px-1.5 py-0.5 text-xs font-semibold text-whites">
                     {formatDuration(videoInfo.duration)}
                 </span>
             </Link>
@@ -128,7 +128,7 @@ function VideoCard({ videoInfo, layout = "grid", compact = false }: VideoCardVid
                     <DropdownMenuContent align="end">
                         <DropdownMenuItem className="cursor-pointer text-foreground">
                             <ListPlus />
-                            Добавить в очередь
+                            Add to queue
                         </DropdownMenuItem>
                         <DropdownMenuItem className="cursor-pointer text-foreground">
                             <Clock4 />
@@ -136,7 +136,7 @@ function VideoCard({ videoInfo, layout = "grid", compact = false }: VideoCardVid
                         </DropdownMenuItem>
                         <DropdownMenuItem className="cursor-pointer text-foreground">
                             <Bookmark />
-                            Добавить в плеилист
+                            Add to playlist
                         </DropdownMenuItem>
                         <DropdownMenuItem className="cursor-pointer text-foreground">
                             <ArrowDownToLine />
@@ -144,26 +144,26 @@ function VideoCard({ videoInfo, layout = "grid", compact = false }: VideoCardVid
                         </DropdownMenuItem>
                         <DropdownMenuItem className="cursor-pointer text-foreground">
                             <Redo2 />
-                            поделится
+                            Share
                         </DropdownMenuItem>
                         <DropdownMenuItem className="cursor-pointer text-foreground">
                             <Ban />
-                            не интересует
+                            Not interested
                         </DropdownMenuItem>
                         <DropdownMenuItem className="cursor-pointer text-foreground">
                             <CircleMinus />
-                            не ресомендовпть видео с этого канала
+                            Do not recommend videos from this channel
                         </DropdownMenuItem>
                         <DropdownMenuItem className="cursor-pointer text-foreground">
                             <Flag />
-                            пожаловаться
+                            Report
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
             <div className="text-xs text-gray-500 ml-10 mt-1">
                 <div>{videoInfo.ownerDetails?.username}</div>
-                        {formatViews(videoInfo.views)} vizualizări · {new Date(videoInfo.createdAt).toLocaleDateString("ro-RO")}
+                {formatViews(videoInfo.views)} vizualizări · {new Date(videoInfo.createdAt).toLocaleDateString("ro-RO")}
             </div>
 
         </div>

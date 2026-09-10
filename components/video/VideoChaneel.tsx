@@ -28,12 +28,12 @@ function VideoChannel({ userId }: VideoChannelProps) {
     if (error) return <p>Unable to load videos.</p>;
 
     return (
-        <div className="flex flex-col gap-3 p-4 sm:p-6">
+        <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 sm:p-6 lg:grid-cols-3 xl:grid-cols-4">
             {videos.length === 0 ? (
                 <p>No videos yet.</p>
             ) : (
                 videos.map((video) => (
-                    <VideoCard key={video._id} videoInfo={video} layout="list" />
+                    <VideoCard key={video._id} videoInfo={video} layout="grid" />
                 ))
             )}
         </div>

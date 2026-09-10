@@ -3,6 +3,8 @@ import type {
   ApiResponse,
   ChangePasswordPayload,
   CommentPayload,
+  CommentResponse,
+  CommentsPaginationResponse,
   JsonPayload,
   LoginPayload,
   PlaylistPayload,
@@ -127,16 +129,23 @@ export async function toggleVideoPublishStatus(videoId: string) {
 }
 
 // Comment routes
-export async function getAllCommentsVideo(videoId: string) {
-  const response = await api.get(`/comments/${videoId}`);
+export async function getAllCommentsVideo(
+  videoId: string,
+): Promise<ApiResponse<CommentsPaginationResponse>> {
+  const response = await api.get<ApiResponse<CommentsPaginationResponse>>(
+    `/comments/${videoId}`,
+  );
   return response.data;
 }
 
 export async function addCommentVideo(
   videoId: string,
   payload: CommentPayload,
-) {
-  const response = await api.post(`/comments/${videoId}`, payload);
+): Promise<ApiResponse<CommentResponse>> {
+  const response = await api.post<ApiResponse<CommentResponse>>(
+    `/comments/${videoId}`,
+    payload,
+  );
   return response.data;
 }
 

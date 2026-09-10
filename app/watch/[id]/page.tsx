@@ -11,6 +11,8 @@ import AuthGuard from "@/components/layout/AuthGuard";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import VideoList from "@/components/video/VideoList";
+import Comments from "@/components/comments/Comments";
+import Link from "next/link";
 
 const formatLike = (like: number) => {
     if (like >= 1000000) return (like / 1000000).toFixed(1) + "M";
@@ -69,7 +71,7 @@ export default function VideoPage() {
 
     return (
         <AuthGuard>
-            <div className="grid gap-4 p-3 lg:grid-cols-[minmax(0,1fr)_380px]" key={id}>
+            <div className="grid ml-17 gap-4 p-3 lg:grid-cols-[minmax(0,1fr)_380px]" key={id}>
                 <main className="min-w-0">
                     <video
                         src={video.videoFile}
@@ -79,13 +81,18 @@ export default function VideoPage() {
                     />
                     <div className="mt-2 flex flex-wrap items-center gap-3">
                         {video.ownerDetails?.avatar ? (
-                            <Image
-                                src={video.ownerDetails.avatar}
-                                alt={video.ownerDetails.username}
-                                width={32}
-                                height={32}
-                                className="size-8 rounded-full object-cover"
-                            />
+                            <Link
+                                href={`/channel/${video.ownerDetails.username ?? video.owner}`}
+                            >
+                                <Image
+                                    src={video.ownerDetails.avatar}
+                                    alt={video.ownerDetails.username}
+                                    width={32}
+                                    height={32}
+                                    className="size-8 rounded-full object-cover"
+                                />
+                            </Link>
+
                         ) : (
                             <CircleUser className="size-8" />
                         )}
@@ -109,7 +116,7 @@ export default function VideoPage() {
 
                             <button className="flex h-10 items-center gap-2 rounded-2xl border border-border bg-whiteBlue px-4 transition-all duration-300 hover:scale-105">
                                 <Redo2 size={18} />
-                                поделится
+                                Share
                             </button>
                             <button className="flex h-10 items-center gap-2 rounded-2xl border border-border bg-whiteBlue px-4 transition-all duration-300 hover:scale-105">
                                 <Bookmark size={18} />
@@ -118,6 +125,7 @@ export default function VideoPage() {
                         </div>
                     </div>
                     <p className="mt-3">{video.description}</p>
+                    <Comments videoId={id} />
                 </main>
                 <aside className="min-w-0">
                     <VideoList compact />

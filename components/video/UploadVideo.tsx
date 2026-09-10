@@ -35,7 +35,7 @@ export default function UploadVideo({ refetchVideo, videoInfo }: UploadVideoProp
     });
 
     return (
-        <div className="flex items-center">
+        <div className="flex items-center ml-17">
             <form className="flex  w-full max-w-xl flex-col gap-5 rounded-xl border border-border bg-card p-6  ml-10 mt-10">
                 <h2 className="text-lg font-semibold text-foreground">
                     {videoInfo ? "Edit video" : "Upload a new video"}

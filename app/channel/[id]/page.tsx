@@ -32,7 +32,7 @@ function Channel() {
 
     return (
         <AuthGuard>
-            <div>
+            <div className="ml-17">
                 {user.coverImage && (
                     <div className="relative h-40 w-full">
                         <Image
