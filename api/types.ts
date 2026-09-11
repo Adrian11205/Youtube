@@ -62,6 +62,7 @@ export type CommentPayload = {
 export type CommentResponse = {
   _id: string;
   content: string;
+  likes?: number;
   video: string;
   owner: string;
   ownerDetails?: {

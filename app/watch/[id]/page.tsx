@@ -3,7 +3,7 @@
 import { getAllLikedVideos, getVideoByID, toggleLikeVideo } from "@/api/requests";
 import type { VideoInfo } from "@/api/types";
 import { useParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { CircleUser, ThumbsUp, Redo2, Bookmark } from "lucide-react";
 import { useAuthStore } from "@/stores/useAuthStore";
@@ -37,6 +37,23 @@ export default function VideoPage() {
         enabled: isAuth,
     });
 
+    const likeVideoMutation = useMutation({
+        mutationFn: toggleLikeVideo,
+        onSuccess: async (response) => {
+            if (response?.data?.totalLikes !== undefined) {
+                setLikeCount(response.data.totalLikes);
+            }
+
+            await queryClient.invalidateQueries({
+                queryKey: ["liked-videos"],
+            });
+            await refetch();
+        },
+        onError: (error) => {
+            console.error("Failed to toggle video like", error);
+        },
+    });
+
     const video: VideoInfo | undefined = data?.data;
 
     if (isLoading) return <p>Loading video...</p>;
@@ -51,22 +68,10 @@ export default function VideoPage() {
 
 
 
-    const handleLike = async () => {
+    const handleLike = () => {
         if (!isAuth) return;
 
-        try {
-            const response = await toggleLikeVideo(video._id);
-            if (response?.data?.totalLikes !== undefined) {
-                setLikeCount(response.data.totalLikes);
-            }
-
-            await queryClient.invalidateQueries({
-                queryKey: ["liked-videos"],
-            });
-            await refetch();
-        } catch (error) {
-            console.error("Failed to toggle video like", error);
-        }
+        likeVideoMutation.mutate(video._id);
     };
 
     return (
@@ -101,7 +106,7 @@ export default function VideoPage() {
                         <div className="flex flex-wrap items-center gap-2">
                             <button
                                 className="flex h-10 items-center justify-center gap-2 rounded-2xl border border-border bg-whiteBlue px-4 transition-all duration-300 hover:scale-105"
-                                disabled={!isAuth}
+                                disabled={!isAuth || likeVideoMutation.isPending}
                                 onClick={handleLike}
                                 aria-label="Like this video"
                             >

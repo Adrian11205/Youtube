@@ -1,19 +1,27 @@
-import { getAllCommentsVideo, addCommentVideo, updateComment, deleteComment } from "@/api/requests"
+import { getAllCommentsVideo, addCommentVideo, updateComment, deleteComment, toggleLikeCcomment } from "@/api/requests"
 import { useState, useEffect } from "react"
 import type { CommentResponse } from "@/api/types"
 import { Textarea } from "@/components/ui/textarea"
 import { useMutation } from "@tanstack/react-query"
 import Image from "next/image";
+import { ThumbsUp } from "lucide-react";
 
 interface CommentsProps {
     videoId: string;
 }
+
+const formatLike = (like: number) => {
+    if (like >= 1000000) return (like / 1000000).toFixed(1) + "M";
+    if (like >= 1000) return (like / 1000).toFixed(1) + "K";
+    return like.toString();
+};
 
 function Comments({ videoId }: CommentsProps) {
     const [comments, setComments] = useState<CommentResponse[]>([]);
     const [content, setContent] = useState("");
     const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
     const [editedContent, setEditedContent] = useState("");
+
     useEffect(() => {
         getAllCommentsVideo(videoId).then((response) => {
             setComments(response.data.docs)
@@ -49,6 +57,21 @@ function Comments({ videoId }: CommentsProps) {
             );
         },
     })
+
+    const likeCommentsMutation = useMutation({
+        mutationFn: toggleLikeCcomment,
+        onSuccess: (response, commentId) => {
+            setComments((previousComments) =>
+                previousComments.map((comment) =>
+                    comment._id === commentId ? {
+                        ...comment,
+                        likes: response.data.totalLikes
+                    } : comment
+                ))
+        }
+    })
+
+
 
     return (
         <div className="space-y-4">
@@ -145,6 +168,19 @@ function Comments({ videoId }: CommentsProps) {
                                         }}
                                     >
                                         Delete
+                                    </button>
+
+                                    <button
+                                        className="rounded-2xl border gap-1 border-foreground px-2 flex items-center"
+                                        onClick={() => likeCommentsMutation.mutate(comment._id)}
+                                    >
+                                        <ThumbsUp
+                                            size={18}
+                                            className="text-foreground transition-colors"
+                                        />
+                                        <span className="font-semibold">
+                                            {formatLike(comment.likes ?? 0)}
+                                        </span>
                                     </button>
                                 </div>
                             </>
